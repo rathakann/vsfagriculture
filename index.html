@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VSF Agriculture</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100 min-h-screen flex items-center justify-center">
+
+<div class="w-full max-w-md bg-white rounded-xl shadow-md p-5">
+
+    <!-- Header -->
+    <div class="flex items-center justify-between mb-4">
+        <div class="flex items-center space-x-3">
+
+            <!-- Logo -->
+            <div class="w-10 h-10 rounded-lg overflow-hidden bg-gray-100 flex items-center justify-center">
+                <img 
+                    src="https://via.placeholder.com/40" 
+                    alt="Company Logo"
+                    class="w-full h-full object-cover"
+                    onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+                >
+
+                <!-- Fallback (Initials) -->
+                <div class="hidden w-full h-full items-center justify-center text-xs font-semibold text-gray-600">
+                    CO
+                </div>
+            </div>
+
+            <div>
+                <h2 class="text-sm font-semibold text-gray-800 leading-tight">
+                    VSF Agriculture
+                </h2>
+                <p class="text-xs text-gray-500">Profile</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Info List -->
+    <div class="divide-y text-sm">
+
+        <!-- Email -->
+        <div class="flex items-center justify-between py-2">
+            <div class="flex items-center space-x-2 text-gray-600">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M16 12H8m8 0l-8 0m8 0l4-4m-4 4l4 4M4 6h16M4 6l8 7 8-7" />
+                </svg>
+                <span>Email</span>
+            </div>
+            <span class="text-gray-800 font-medium">company@example.com</span>
+        </div>
+
+        <!-- Phone -->
+        <div class="flex items-center justify-between py-2">
+            <div class="flex items-center space-x-2 text-gray-600">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M3 5h2l3 7-1 2a16 16 0 007 7l2-1 7 3v2a2 2 0 01-2 2A19 19 0 013 5z" />
+                </svg>
+                <span>Phone</span>
+            </div>
+            <span class="text-gray-800 font-medium">+855 12 345 678</span>
+        </div>
+
+        <!-- Address -->
+        <div class="flex items-start justify-between py-2">
+            <div class="flex items-center space-x-2 text-gray-600">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M12 11c1.657 0 3-1.567 3-3.5S13.657 4 12 4s-3 1.567-3 3.5S10.343 11 12 11z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M19 20l-7-4-7 4V8a7 7 0 1114 0v12z" />
+                </svg>
+                <span>Address</span>
+            </div>
+            <span class="text-gray-800 font-medium text-right">
+                Phnom Penh
+            </span>
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>
