@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VSF Durian</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide (icon font style usage) -->
+    <!-- <script src="https://unpkg.com/lucide@latest"></script> -->
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- QRCode.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <!-- Google Font: Nokora -->
+    <link href="https://fonts.googleapis.com/css2?family=Nokora:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<!-- Apply Nokora globally -->
+<style>
+    body {
+        font-family: Arial, "Nokora", sans-serif;
+            text-align: center;
+            padding-top: 50px;
+        }
+
+        #qr-wrapper {
+            position: relative;
+            display: inline-block;
+        }
+
+        #qr-code canvas {
+            display: block;
+        }
+
+        #qr-logo {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            border-radius: 8px;
+            padding: 4px;
+        }
+</style>
+
+<body class="bg-gray-100 flex items-center justify-center">
+    <div class="w-full max-w-lg bg-white rounded-xl shadow-md p-5">
+        <!-- Header -->
+        <div class="flex items-center justify-between mb-4">
+            <div class="flex items-center space-x-3">
+                <!-- Logo -->
+                <div class="w-10 h-10 rounded-lg overflow-hidden bg-gray-100 flex items-center justify-center">
+                    <img src="https://via.placeholder.com/40" alt="Company Logo" class="w-full h-full object-cover"
+                        onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    <!-- Fallback (Initials) -->
+                    <div class="hidden w-full h-full items-center justify-center text-xs font-semibold text-gray-600">
+                        <img src="logo.png" alt="VSF Durian Logo" class="object-cover">
+                    </div>
+                </div>
+                <div>
+                    <h2 class="text-sm font-semibold text-gray-800 leading-tight" data-i18n="company_name">
+                        VSF Durian
+                    </h2>
+                    <p class="text-xs text-gray-500" data-i18n="profile">Profile</p>
+                </div>
+            </div>
+            <div class="flex items-center justify-center gap-3 mt-4">
+            
+                <select id="downloadSize" class="px-4 py-2 border border-gray-300 rounded-lg shadow-sm 
+                           focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500
+                           text-sm">
+                    <option value="1000">1000 x 1000</option>
+                    <option value="800">800 x 800</option>
+                    <option value="500">500 x 500</option>
+                    <option value="300">300 x 300</option>
+                </select>
+            
+                <button id="downloadBtn" class="px-5 py-2 bg-blue-600 text-white rounded-lg shadow 
+                           hover:bg-blue-700 active:scale-95 transition-all duration-150
+                           text-sm font-medium">
+                    Download PNG
+                </button>
+            
+            </div>
+        </div>
+        <hr class="my-4 border-gray-300">
+        <div class="row">
+            <div class="col">
+                <div id="qr-wrapper">
+                    <div id="qr-code"></div>
+                    <img id="qr-logo" src="logo.png" alt="VSF Durian Logo" onerror="this.style.display='none';">
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- Activate icons -->
+    <script>
+        // lucide.createIcons();
+
+        $(document).ready(function () {
+
+            const qrSize = 300;          // QR size (px)
+            const logoSize = 70;         // Logo size (px)
+            const redirectUrl = "https://vsfagriculture.vercel.app"; // Target URL
+
+            // Generate QR Code
+            const qr = new QRCode(document.getElementById("qr-code"), {
+                text: redirectUrl,
+                width: qrSize,
+                height: qrSize,
+                colorDark: "#000000",
+                colorLight: "#ffffff",
+                crossorigin: "anonymous", // Enable CORS for logo loading   
+                correctLevel: QRCode.CorrectLevel.H // HIGH for logo overlay
+            });
+
+            // Resize logo dynamically
+            $("#qr-logo").css({
+                width: logoSize + "px",
+                height: logoSize + "px"
+            });
+
+        });
+
+        // DOWNLOAD FUNCTION
+        $("#downloadBtn").click(function () {
+
+            const size = parseInt($("#downloadSize").val());
+            const padding = 40;
+
+            const originalCanvas = $("#qr-code canvas")[0];
+
+            const exportCanvas = document.createElement("canvas");
+            const ctx = exportCanvas.getContext("2d");
+
+            exportCanvas.width = size;
+            exportCanvas.height = size;
+
+            // ✅ Step 1: White background
+            ctx.fillStyle = "#ffffff";
+            ctx.fillRect(0, 0, size, size);
+
+            // ✅ Step 2: Calculate inner QR area (with padding)
+            const innerSize = size - (padding * 2);
+
+            // Draw QR with padding offset
+            ctx.drawImage(originalCanvas, padding, padding, innerSize, innerSize);
+
+            // Load logo
+            const logoImg = new Image();
+            logoImg.src = "/logo.png";
+
+            logoImg.onload = function () {
+
+                const logoDrawSize = innerSize * 0.25;
+
+                const x = (size - logoDrawSize) / 2;
+                const y = (size - logoDrawSize) / 2;
+
+                // White background behind logo
+                ctx.fillStyle = "#ffffff";
+                ctx.fillRect(x - 5, y - 5, logoDrawSize + 10, logoDrawSize + 10);
+
+                ctx.drawImage(logoImg, x, y, logoDrawSize, logoDrawSize);
+
+                // Export
+                const link = document.createElement("a");
+                link.download = "vsf_durian_qr.png";
+                link.href = exportCanvas.toDataURL("image/png");
+                link.click();
+            };
+
+        });
+
+        
+    </script>
+</body>
+
+</html>
